@@ -1,9 +1,10 @@
 import { randomBytes } from 'crypto';
 
+import { faker } from '@faker-js/faker';
+
 import { CustomerRepository } from './customer.repository';
 import { Customer, ModelUpdate } from './interfaces';
 
-import { faker } from '@faker-js/faker';
 import { CustomerAnonymizedRepository } from '../customer-anonymized/customer-anonymized.repository';
 
 export class CustomerService {

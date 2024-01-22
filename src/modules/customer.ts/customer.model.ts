@@ -44,6 +44,4 @@ export const customer = {
 
 const customerSchema = new Schema<Customer>(customer, { versionKey: false, timestamps: true });
 
-// customerSchema.pre('save', function (next) {});
-
 export default model<Customer>('Customer', customerSchema);
