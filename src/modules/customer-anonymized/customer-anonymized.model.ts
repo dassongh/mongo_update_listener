@@ -1,35 +1,7 @@
 import { Schema, model } from 'mongoose';
+import { customer } from '../customer.ts/customer.model';
+import { Customer } from '../customer.ts/interfaces';
 
-const customerSchema = new Schema(
-  {
-    firstName: {
-      type: String,
-      required: true,
-    },
-    lastName: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      required: true,
-    },
-    address: {
-      line1: String,
-      line2: String,
-      postcode: String,
-      city: String,
-      state: String,
-      country: String,
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
-  },
-  { versionKey: false },
-);
+const customerSchema = new Schema<Customer>(customer, { versionKey: false });
 
-// customerSchema.pre('save', function (next) {});
-
-export default model('CustomerAnonymized', customerSchema);
+export default model<Customer>('CustomerAnonymized', customerSchema);

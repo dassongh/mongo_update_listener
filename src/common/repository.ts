@@ -1,10 +1,18 @@
-import { Model } from 'mongoose';
+import { FilterQuery, Model, PopulateOptions, ProjectionFields, SortOrder } from 'mongoose';
 import { DBError } from '../utils/customError';
+import { ModelType } from './interfaces';
 
-export class Repository {
-  constructor(private model: Model<any>) {}
+export class Repository<T extends ModelType> {
+  constructor(private model: Model<T>) {}
 
-  getPaginated(filter, projection, limit, offset, sort, populate) {
+  getPaginated(
+    filter: FilterQuery<T>,
+    projection: ProjectionFields<T>,
+    limit: number,
+    offset: number,
+    sort: string | { [key: string]: SortOrder } | [string, SortOrder][] | null | undefined,
+    populate: PopulateOptions,
+  ) {
     return this.model
       .find(filter, projection)
       .sort(sort)
@@ -48,6 +56,12 @@ export class Repository {
 
   create(payload) {
     return this.model.create(payload).catch(error => {
+      throw new DBError(error);
+    });
+  }
+
+  createMany(payload: T[]) {
+    return this.model.insertMany(payload).catch(error => {
       throw new DBError(error);
     });
   }
