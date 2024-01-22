@@ -1,4 +1,5 @@
 export interface Customer {
+  _id?: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -10,4 +11,6 @@ export interface Customer {
     state: string;
     country: string;
   };
+  createdAt?: Date;
+  updatedAt?: Date;
 }

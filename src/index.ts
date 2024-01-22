@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 import { DB_URI } from './config';
 import { errorHandler, routeNotFound } from './middleware/errorHandler';
-import { createCustomers } from './server';
+import { createCustomers, initListener } from './server';
 
 const app = express();
 
@@ -14,6 +14,7 @@ app.use([routeNotFound, errorHandler]);
 
 app.listen(4000, () => {
   console.table({ name: '' });
+  initListener();
   createCustomers();
   mongoose
     .connect(DB_URI)

@@ -46,11 +46,4 @@ const customerSchema = new Schema<Customer>(customer, { versionKey: false, times
 
 // customerSchema.pre('save', function (next) {});
 
-const CustomerModel = model<Customer>('Customer', customerSchema);
-
-CustomerModel.watch().on('change', data => {
-  console.log('Customer model changed');
-  console.log(data);
-});
-
-export default CustomerModel;
+export default model<Customer>('Customer', customerSchema);

@@ -1,37 +1,23 @@
 import { faker } from '@faker-js/faker';
+
+import CustomerModel from './modules/customer.ts/customer.model';
+
+import { CustomerService } from './modules/customer.ts/customer.service';
+
+import { CustomerAnonymizedRepository } from './modules/customer-anonymized/customer-anonymized.repository';
 import { CustomerRepository } from './modules/customer.ts/customer.repository';
-import { Customer } from './modules/customer.ts/interfaces';
+
+const customerService = new CustomerService(new CustomerRepository(), new CustomerAnonymizedRepository());
 
 export function createCustomers() {
-  const customerRepository = new CustomerRepository();
-
   setInterval(() => {
     const numberOfCustomers = faker.number.int({ min: 1, max: 10 });
-    const customers = createFakeCustomers(numberOfCustomers);
-    customerRepository.createMany(customers).then(res => {
+    customerService.createFakeCustomers(numberOfCustomers).then(res => {
       console.log(`Created ${res.length} customers`);
     });
   }, 200);
 }
 
-function createFakeCustomers(numberOfCustomers: number): Customer[] {
-  const customers: Customer[] = new Array(numberOfCustomers);
-
-  for (let i = 0; i < numberOfCustomers; i++) {
-    customers[i] = {
-      firstName: faker.person.firstName(),
-      lastName: faker.person.lastName(),
-      email: faker.internet.email(),
-      address: {
-        line1: faker.location.streetAddress(),
-        line2: faker.location.secondaryAddress(),
-        postcode: faker.location.zipCode(),
-        city: faker.location.city(),
-        state: faker.location.state(),
-        country: faker.location.country(),
-      },
-    };
-  }
-
-  return customers;
+export function initListener() {
+  CustomerModel.watch().on('change', customerService.createAnonymizedCustomer.bind(customerService));
 }
