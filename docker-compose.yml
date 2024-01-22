@@ -28,6 +28,6 @@ services:
     image: 'mongo'
     networks:
       - app_network
-    container_name: 'mongo'
+    container_name: 'mongo_database'
     ports:
       - '27017:27017'
