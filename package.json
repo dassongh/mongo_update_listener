@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "build": "tsc --build tsconfig.json",
-    "start": "node ./dist",
+    "start": "env-cmd -f ./config/.env node ./dist",
     "start:local": "env-cmd -f ./config/.env nodemon ./src",
     "prettier-format": "prettier --config .prettierrc ./src/**/*.ts --write",
     "lint": "eslint . --ext .ts",

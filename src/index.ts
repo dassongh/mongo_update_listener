@@ -18,6 +18,7 @@ app.listen(4000, () => {
   console.table({ port: 4000 });
   initListener();
   createCustomers();
+  console.log(DB_URI);
   mongoose
     .connect(DB_URI)
     .then(() => console.log('Connected to MongoDB'))

@@ -5,25 +5,6 @@ networks:
     driver: bridge
 
 services:
-  # app:
-  #   container_name: 'app'
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   environment:
-  #     - POSTGRES_HOST=postgres
-  #     - POSTGRES_PORT=5432
-  #     - POSTGRES_DB=postgres
-  #     - POSTGRES_USER=superuser
-  #     - POSTGRES_PASSWORD=superpassword
-  #     - BASE_URL=http://app:4000
-  #   ports:
-  #     - '4000:4000'
-  #   depends_on:
-  #     - postgres
-  #   networks:
-  #     - app_network
-
   mongo_database:
     image: 'mongodb'
     networks:
