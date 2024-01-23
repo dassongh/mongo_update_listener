@@ -1,4 +1,4 @@
-import { FilterQuery, Model, PopulateOptions, ProjectionFields, SortOrder } from 'mongoose';
+import { FilterQuery, Model, ProjectionFields, SortOrder } from 'mongoose';
 import { DBError } from '../utils/customError';
 import { ModelType } from './interfaces';
 
@@ -10,22 +10,20 @@ export class Repository<T extends ModelType> {
     projection: ProjectionFields<T>,
     limit: number,
     offset: number,
-    sort: string | { [key: string]: SortOrder } | [string, SortOrder][] | null | undefined,
-    populate: PopulateOptions,
+    sort?: string | { [key: string]: SortOrder } | [string, SortOrder][] | null | undefined,
   ) {
     return this.model
       .find(filter, projection)
       .sort(sort)
       .limit(limit)
       .skip(offset)
-      .populate(populate)
       .lean()
       .catch(error => {
         throw new DBError(error);
       });
   }
 
-  get(filter, projection) {
+  get(filter: FilterQuery<T>, projection: ProjectionFields<T>) {
     return this.model
       .find(filter, projection)
       .lean()
@@ -34,7 +32,7 @@ export class Repository<T extends ModelType> {
       });
   }
 
-  getOne(filter, projection, populate) {
+  getOne(filter: FilterQuery<T>, projection: ProjectionFields<T>, populate) {
     return this.model
       .findOne(filter, projection)
       .populate(populate)
@@ -44,7 +42,7 @@ export class Repository<T extends ModelType> {
       });
   }
 
-  getById(id, projection, populate) {
+  getById(id, projection: ProjectionFields<T>, populate) {
     return this.model
       .findOne({ _id: id }, projection)
       .populate(populate)
@@ -66,19 +64,19 @@ export class Repository<T extends ModelType> {
     });
   }
 
-  updateMany(filter, update) {
+  updateMany(filter: FilterQuery<T>, update) {
     return this.model.updateMany(filter, update).catch(error => {
       throw new DBError(error);
     });
   }
 
-  updateOne(filter, update) {
+  updateOne(filter: FilterQuery<T>, update) {
     return this.model.updateOne(filter, update).catch(error => {
       throw new DBError(error);
     });
   }
 
-  findOneAndUpdate(filter, update) {
+  findOneAndUpdate(filter: FilterQuery<T>, update) {
     return this.model
       .findOneAndUpdate(filter, update, { new: true })
       .lean()
@@ -87,19 +85,19 @@ export class Repository<T extends ModelType> {
       });
   }
 
-  deleteOne(filter) {
+  deleteOne(filter: FilterQuery<T>) {
     return this.model.deleteOne(filter).catch(error => {
       throw new DBError(error);
     });
   }
 
-  deleteMany(filter) {
+  deleteMany(filter: FilterQuery<T>) {
     return this.model.deleteMany(filter).catch(error => {
       throw new DBError(error);
     });
   }
 
-  count(filter) {
+  count(filter: FilterQuery<T>) {
     return this.model.countDocuments(filter).catch(error => {
       throw new DBError(error);
     });
