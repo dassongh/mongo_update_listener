@@ -18,6 +18,7 @@ of a customer document to customer anonymized collection.
 
 - Clone repository
 - `cd` into project directory
+- run `npm i` or `npm ci` (package-lock is in the repository)
 - run `docker compose up -d` to spin up db
 - run `npm run build && npm start`
 - go to `GET: localhost:4000/api/v1/customer-anonymized` to check new customers
